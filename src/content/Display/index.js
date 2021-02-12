@@ -6,7 +6,7 @@ export const Display = props => {
 
     return (
         <div>
-            {/* <p>{content}</p> */}
+            <p>{props.display}</p>
         </div>
     )
 };

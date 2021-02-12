@@ -6,9 +6,10 @@ export const Navbar = (props) => {
 
     return (
         <div className='navbar'>
-            <label style={{display: "none"}}for='search'></label>
-            <input type='text' placeholder='Search'/>
-            <button type='submit' onClick={() => props.handleSearch}>Search</button>
+            <form onSubmit={() => props.handleSearch()}>
+                <label style={{display: "none"}}for='search'></label>
+                <input id='searchBar' type='text' placeholder='Search' value={props.value} onChange={props.handleChange} />
+            </form>
         </div>
     )
 }
