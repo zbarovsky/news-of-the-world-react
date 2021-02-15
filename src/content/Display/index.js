@@ -6,6 +6,7 @@ export const Display = props => {
 
     return (
         <div>
+            <h1>Searched News</h1>
             <p>{props.display}</p>
         </div>
     )

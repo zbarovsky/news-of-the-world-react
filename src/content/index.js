@@ -30,7 +30,7 @@ export const App = () => {
 
     const [results, setResults] = useState([])
     const [search, setSearch] = useState('')
-    const [display, setDisplay] = useState([])
+    const [display, setDisplay] = useState('')
 
     useEffect(() =>{
         axios.get(topNewsUrl)
@@ -40,25 +40,26 @@ export const App = () => {
     }, [])
 
     function handleChange(e) {
+        e.preventDefault()
         setSearch({value: e.target.value})
-        console.log(e.target.value)
+        console.log('search ', search)
     }
 
     function HandleSearch(e) {
-        useEffect(() => {
+        e.preventDefault()
+        //useEffect(() => {
             axios.get(`https://newsapi.org/v2/everything?q=${search}&apiKey=${process.env.REACT_APP_API_KEY}`)
             .then(response => {
                 setDisplay(response.data.articles)
                 console.log(response.data.articles)
             })
-        }, [])
-        e.preventDefault()
+        //}, [])
     }
 
     return (
         // Router for setting routes
         <div>
-            <Navbar search={search} handleChange={handleChange} handleSearch={HandleSearch}/>
+            <Navbar search={search} handleChange={handleChange} HandleSearch={HandleSearch} />
             <Router>
                 <div className='app'>
                     <Landing results={results} />
