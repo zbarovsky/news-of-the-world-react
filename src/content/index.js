@@ -28,7 +28,6 @@ export const App = () => {
     function handleChange(e) {
         e.preventDefault()
         setSearch({value: e.target.value})
-        //console.log('search ', search)
     }
 
     //console.log('bloopity ', search.value)
