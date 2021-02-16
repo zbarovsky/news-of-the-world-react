@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import { Display } from './Display';
 import { Landing } from './Landing';
@@ -7,20 +7,6 @@ import { Navbar } from './components/Navbar'
 
 import '../styling/style.css';
 import axios from 'axios';
-
-// export const is quicker but must be imported directly
-// rather than as a default
-// refer to index.js at src root to see how import works
-
-// --------------------- TODO --------------------------
-/* 
-    make navbar with routes/search functionality
-        // search should take string, then use api to get appropriate articles to reference
-        // search bar renders display page with appropriate info
-    landing page -- DONE
-        display top articles for us
-*/
-
 
 export const App = () => {
 
@@ -42,19 +28,27 @@ export const App = () => {
     function handleChange(e) {
         e.preventDefault()
         setSearch({value: e.target.value})
-        console.log('search ', search)
+        //console.log('search ', search)
     }
 
+    //console.log('bloopity ', search.value)
+
     function HandleSearch(e) {
+        //alert(search.value)
+        //GetSearch()
         e.preventDefault()
-        //useEffect(() => {
-            axios.get(`https://newsapi.org/v2/everything?q=${search}&apiKey=${process.env.REACT_APP_API_KEY}`)
-            .then(response => {
-                setDisplay(response.data.articles)
-                console.log(response.data.articles)
-            })
-        //}, [])
     }
+    
+    useEffect(() => {
+        //alert('search hit')
+        axios.get(`https://newsapi.org/v2/everything?q=${search.value}&apiKey=${process.env.REACT_APP_API_KEY}`)
+        .then(response => {
+            setDisplay(response.data.articles)
+            console.log('display', display)
+            return <Redirect to ={{pathname: "/display", state: {display: display} }} />
+            //console.log('display ', response.data.articles)
+        })
+    }, [search])
 
     return (
         // Router for setting routes
@@ -63,7 +57,7 @@ export const App = () => {
             <Router>
                 <div className='app'>
                     <Landing results={results} />
-                    <Display display={display} />
+                    <Route path='/display' render={(display) => <Display {...display} /> } />
                 </div>
             </Router>
         </div>
